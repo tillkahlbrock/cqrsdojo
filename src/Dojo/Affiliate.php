@@ -2,7 +2,7 @@
 
 namespace Dojo;
 
-class Affiliate
+class Affiliate implements \JsonSerializable
 {
     private $id;
     private $name;
@@ -38,5 +38,12 @@ class Affiliate
         return $this->name;
     }
 
-
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'name' => $this->name,
+            'country' => $this->country
+        );
+    }
 }
