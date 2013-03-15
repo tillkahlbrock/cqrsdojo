@@ -14,7 +14,8 @@
     ],
     "require": {
         "slim/slim": "2.2.*",
-        "sencha/extjs": "4.2.0"
+        "sencha/extjs": "4.2.0",
+        "kriswallsmith/buzz": "0.9"
     },
     "require-dev": {
         "phpspec/phpspec2": "*"
