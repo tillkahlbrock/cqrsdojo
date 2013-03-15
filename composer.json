@@ -1,6 +1,20 @@
 {
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "sencha/extjs",
+                "version": "4.2.0",
+                "dist": {
+                    "url": "http://cdn.sencha.com/ext/gpl/ext-4.2.0-gpl.zip",
+                    "type": "zip"
+                }
+            }
+        }
+    ],
     "require": {
-        "symfony/console": "2.1.*"
+        "slim/slim": "2.2.*",
+        "sencha/extjs": "4.2.0"
     },
     "require-dev": {
         "phpspec/phpspec2": "*"
