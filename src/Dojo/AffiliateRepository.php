@@ -21,7 +21,7 @@ class AffiliateRepository
             $affiliate->setCountry($data['country']);
         }
 
-        $this->storage[$id] = $affiliate;
+        $this->storeAffiliate($id, $affiliate);
 
         return $affiliate;
     }
@@ -33,5 +33,22 @@ class AffiliateRepository
         }
 
         return null;
+    }
+
+    public function update(Affiliate $affilate)
+    {
+        $this->storeAffiliate($affilate->getId(), $affilate);
+    }
+
+    public function delete($affiliateId)
+    {
+        if (isset($this->storage[$affiliateId])) {
+            unset($this->storage[$affiliateId]);
+        }
+    }
+
+    private function storeAffiliate($id, $affiliate)
+    {
+        $this->storage[$id] = clone($affiliate);
     }
 }

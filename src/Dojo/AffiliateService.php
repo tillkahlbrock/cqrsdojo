@@ -4,9 +4,12 @@ namespace Dojo;
 
 class AffiliateService
 {
+    /**
+     * @var AffiliateRepository
+     */
     private $repository;
 
-    public function __construct($repository)
+    public function __construct(AffiliateRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -16,12 +19,19 @@ class AffiliateService
         $this->repository->create($data);
     }
 
+    /**
+     * @param $affiliateId
+     * @return Affiliate
+     */
     public function retrieveAffiliate($affiliateId)
     {
-        $this->repository->retrieveByAffiliateId($affiliateId);
+        return $this->repository->retrieveByAffiliateId($affiliateId);
     }
 
-    public function updateAffiliate($affiliate)
+    /**
+     * @param Affiliate $affiliate
+     */
+    public function updateAffiliate(Affiliate $affiliate)
     {
         $this->repository->update($affiliate);
     }

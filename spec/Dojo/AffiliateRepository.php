@@ -23,26 +23,49 @@ class AffiliateRepository extends ObjectBehavior
             'country' => $country
         );
 
-        $affiliate = $this->createAffiliate($data);
+        $affiliate = $this->create($data);
         $affiliate->getName()->shouldBe($name);
         $affiliate->getCountry()->shouldBe($country);
-    }
-
-    /**
-     * @param $data
-     * @return \Dojo\Affiliate
-     */
-    private function createAffiliate($data)
-    {
-        return $this->create($data);
     }
 
     public function it_should_retrieve_an_affiliate()
     {
         $affiliateId = 123;
 
-        $affiliate = $this->createAffiliate(array('id' => $affiliateId));
+        $affiliate = $this->create(array('id' => $affiliateId));
 
-        $this->retrieve($affiliateId)->shouldReturn($affiliate);
+        $this->retrieve($affiliateId)->shouldBeLike($affiliate);
     }
+
+    public function it_should_update_the_affiliate_with_the_given_data()
+    {
+        $affiliateId = 1234;
+
+        $data = array(
+            'id' => $affiliateId,
+            'name' => 'some name',
+            'country' => 'some country'
+        );
+
+        $affiliate = $this->create($data);
+
+        $affiliate->setName('Bob');
+        $affiliate->setCountry('US and A');
+
+        $this->update($affiliate);
+
+        $this->retrieve($affiliateId)->shouldBeLike($affiliate);
+    }
+
+    public function it_should_delete_an_affiliate()
+    {
+        $affiliateId = 12345;
+
+        $this->create(array('id' => $affiliateId));
+
+        $this->delete($affiliateId);
+
+        $this->retrieve($affiliateId)->shouldBe(null);
+    }
+
 }
