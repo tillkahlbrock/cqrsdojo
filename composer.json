@@ -1,0 +1,15 @@
+{
+    "require": {
+        "symfony/console": "2.1.*"
+    },
+    "require-dev": {
+        "phpspec/phpspec2": "*"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": {"Dojo": "src/"}
+    },
+    "minimum-stability": "dev"
+}
