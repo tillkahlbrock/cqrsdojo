@@ -4,15 +4,16 @@ require __DIR__ . "/../../vendor/autoload.php";
 
 $app = new \Slim\Slim();
 $app->get('/affiliate', function() use ($app) {
-    $affiliate = new \Dojo\Affiliate();
-    $affiliate->setId(1);
-    $affiliate->setName('Bob');
-    $affiliate->setCountry('Germany');
+    $service = new Dojo\AffiliateService(new Dojo\AffiliateRepository());
 
-    $affiliates = array(
-        $affiliate
+    $app->response()->body($service->listAffiliates());
+});
+
+$app->post('/affiliate/:id', function() use ($app) {
+    $service = new Dojo\AffiliateService(new Dojo\AffiliateRepository());
+
+    $service->createAffiliate(
+        json_decode($app->request()->getBody(), true)
     );
-
-    $app->response()->body(json_encode($affiliates));
 });
 $app->run();

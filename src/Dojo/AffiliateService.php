@@ -40,4 +40,9 @@ class AffiliateService
     {
         $this->repository->delete($affiliateId);
     }
+
+    public function listAffiliates()
+    {
+        $this->repository->index();
+    }
 }

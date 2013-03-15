@@ -47,8 +47,15 @@ class AffiliateRepository
         }
     }
 
+    public function index()
+    {
+        return $this->storage;
+    }
+
     private function storeAffiliate($id, $affiliate)
     {
-        $this->storage[$id] = clone($affiliate);
+        $browser = new \Buzz\Browser();
+        $browser->post('http://localhost:5984/affiliate', array('Content-Type' => 'application/json'), json_encode($affiliate));
+
     }
 }
