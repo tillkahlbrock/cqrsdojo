@@ -27,6 +27,11 @@ Ext.onReady(function(){
         autoSync: true
     });
 
+    var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
+        clicksToMoveEditor: 1,
+        autoCancel: false
+    });
+
     Ext.create('Ext.grid.Panel', {
         title: 'Affiliates',
         store: Ext.data.StoreManager.lookup('affiliateStore'),
@@ -40,11 +45,37 @@ Ext.onReady(function(){
                 }
             }
         ],
+        tbar: [{
+            text: 'Add Affiliate',
+            handler : function() {
+                rowEditing.cancelEdit();
+
+                // Create a model instance
+                var newAffiliate = Ext.create('Affiliate', {
+                    name: 'New Guy',
+                    country: 'USrael'
+                });
+
+                Ext.data.StoreManager.lookup('affiliateStore').insert(0, newAffiliate);
+                rowEditing.startEdit(0, 0);
+            }
+        }, {
+            text: 'Remove Affiliate',
+            handler: function() {
+                var store = Ext.data.StoreManager.lookup('affiliateStore');
+
+                var selectionModel = grid.getSelectionModel();
+                rowEditing.cancelEdit();
+                store.remove(selectionModel.getSelection());
+                if (store.getCount() > 0) {
+                    selectionModel.select(0);
+                }
+            },
+            disabled: true
+        }],
         selType: 'cellmodel',
         plugins: [
-            Ext.create('Ext.grid.plugin.CellEditing', {
-                clicksToEdit: 1
-            })
+            'rowediting'
         ],
         height: 200,
         width: 400,
