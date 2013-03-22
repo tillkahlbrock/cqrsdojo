@@ -6,6 +6,13 @@ class AffiliateRepository
 {
     private $storage = array();
 
+    private $databaseAdapter;
+
+    public function __construct(\Dojo\DatabaseAdapter $databaseAdapter)
+    {
+        $this->databaseAdapter = $databaseAdapter;
+    }
+
     public function create($data)
     {
         $id = $data['id'];
@@ -21,30 +28,38 @@ class AffiliateRepository
             $affiliate->setCountry($data['country']);
         }
 
-        $this->storeAffiliate($id, $affiliate);
+        $this->databaseAdapter->store($data);
 
         return $affiliate;
     }
 
     public function retrieve($affiliateId)
     {
-        if (isset($this->storage[$affiliateId])) {
-            return $this->storage[$affiliateId];
-        }
+        $data = $this->databaseAdapter->retrieve($affiliateId);
+        $affiliate =  new Affiliate();
 
-        return null;
+        $affiliate->setId($data['id']);
+        $affiliate->setName($data['name']);
+        $affiliate->setCountry($data['country']);
+
+        return $affiliate;
+
     }
 
     public function update(Affiliate $affilate)
     {
-        $this->storeAffiliate($affilate->getId(), $affilate);
+        $data = array(
+            'id' => $affilate->getId(),
+            'name' => $affilate->getName(),
+            'country' => $affilate->getCountry()
+        );
+
+        $this->databaseAdapter->update($data);
     }
 
     public function delete($affiliateId)
     {
-        if (isset($this->storage[$affiliateId])) {
-            unset($this->storage[$affiliateId]);
-        }
+        $this->databaseAdapter->delete($affiliateId);
     }
 
     public function index()
