@@ -10,7 +10,7 @@ Ext.onReady(function(){
         extend: 'Ext.data.Model',
         fields: [{
             name: 'id',
-            type: 'int',
+            type: 'text',
             useNull: false
         }, 'name', 'country']
     });

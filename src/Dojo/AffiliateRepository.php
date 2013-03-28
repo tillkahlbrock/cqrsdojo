@@ -49,13 +49,23 @@ class AffiliateRepository
 
     public function index()
     {
-        return $this->storage;
+        $browser = new \Buzz\Browser();
+        $response = $browser->get('http://localhost:5984/affiliate/_design/all/_view/all');
+
+        $data = json_decode($response->getContent(), true);
+        $rows = $data['rows'];
+        $affiliates = array();
+
+        foreach ($rows as $row) {
+            $affiliates[] = $row['value'];
+        }
+
+        return json_encode($affiliates);
     }
 
     private function storeAffiliate($id, $affiliate)
     {
         $browser = new \Buzz\Browser();
         $browser->post('http://localhost:5984/affiliate', array('Content-Type' => 'application/json'), json_encode($affiliate));
-
     }
 }

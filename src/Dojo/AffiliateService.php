@@ -43,6 +43,6 @@ class AffiliateService
 
     public function listAffiliates()
     {
-        $this->repository->index();
+        return $this->repository->index();
     }
 }
